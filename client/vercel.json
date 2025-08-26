@@ -12,12 +12,12 @@
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "https://live-finance-app-backend.railway.app",
+    "REACT_APP_BACKEND_URL": "https://finance-app-frontend-r8o667pic-laurosmarinis-projects.vercel.app",
     "REACT_APP_COINGECKO_API": "https://api.coingecko.com/api/v3"
   },
   "build": {
     "env": {
-      "REACT_APP_API_URL": "https://live-finance-app-backend.railway.app",
+      "REACT_APP_BACKEND_URL": "https://finance-app-frontend-r8o667pic-laurosmarinis-projects.vercel.app",
       "REACT_APP_COINGECKO_API": "https://api.coingecko.com/api/v3"
     }
   }
