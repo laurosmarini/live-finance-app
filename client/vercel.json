@@ -1,16 +1,7 @@
 {
-  "version": 2,
-  "name": "finance-app-frontend",
-  "buildCommand": "npm run build",
+  "buildCommand": "npm install && npm run build",
   "outputDirectory": "build",
   "installCommand": "npm install",
-  "framework": "create-react-app",
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
   "env": {
     "REACT_APP_BACKEND_URL": "https://finance-app-frontend-r8o667pic-laurosmarinis-projects.vercel.app",
     "REACT_APP_COINGECKO_API": "https://api.coingecko.com/api/v3"
