@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: finance-app-backend
+    env: node
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: "15m"
+      - key: JWT_REFRESH_EXPIRES_IN
+        value: "7d"
+      - key: COINGECKO_API_URL
+        value: "https://api.coingecko.com/api/v3"
+      - key: CORS_ORIGIN
+        value: "https://finance-app-frontend-9pbbsgbjy-laurosmarinis-projects.vercel.app"
