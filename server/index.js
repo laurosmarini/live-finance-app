@@ -57,8 +57,14 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// API routes
-app.use('/api/auth', require('./routes/auth'));
+// API routes (only load if database is available)
+try {
+  const db = require('./config/database');
+  app.use('/api/auth', require('./routes/auth'));
+  console.log('✅ Database routes loaded');
+} catch (error) {
+  console.warn('⚠️ Database not available, skipping database routes:', error.message);
+}
 // app.use('/api/users', require('./routes/users'));
 // app.use('/api/accounts', require('./routes/accounts'));
 // app.use('/api/transactions', require('./routes/transactions'));
