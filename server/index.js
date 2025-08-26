@@ -113,11 +113,14 @@ app.use((err, req, res, next) => {
   res.status(error.status).json({ error });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Finance App API server running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`Health check: http://localhost:${PORT}/api/health`);
-});
-
+// Export app for Vercel serverless
 module.exports = app;
+
+// Start server only in non-serverless environment
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Finance App API server running on port ${PORT}`);
+    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`Health check: http://localhost:${PORT}/api/health`);
+  });
+}
