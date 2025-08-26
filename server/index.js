@@ -57,13 +57,58 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Simple auth routes (without database for now)
+app.post('/api/auth/login', async (req, res) => {
+  const { email, password } = req.body;
+  
+  // Demo user credentials
+  if (email === 'demo@finance-app.com' && password === 'password123') {
+    res.json({
+      message: 'Login successful',
+      user: {
+        id: 1,
+        email: 'demo@finance-app.com',
+        firstName: 'Demo',
+        lastName: 'User'
+      },
+      tokens: {
+        accessToken: 'demo-access-token-' + Date.now(),
+        refreshToken: 'demo-refresh-token-' + Date.now()
+      }
+    });
+  } else {
+    res.status(401).json({
+      error: 'Invalid credentials',
+      code: 'INVALID_CREDENTIALS'
+    });
+  }
+});
+
+app.post('/api/auth/register', async (req, res) => {
+  const { email, password, firstName, lastName } = req.body;
+  
+  res.status(201).json({
+    message: 'User registered successfully',
+    user: {
+      id: Date.now(),
+      email: email,
+      firstName: firstName || 'New',
+      lastName: lastName || 'User'
+    },
+    tokens: {
+      accessToken: 'demo-access-token-' + Date.now(),
+      refreshToken: 'demo-refresh-token-' + Date.now()
+    }
+  });
+});
+
 // API routes (only load if database is available)
 try {
   const db = require('./config/database');
-  app.use('/api/auth', require('./routes/auth'));
-  console.log('✅ Database routes loaded');
+  // app.use('/api/auth', require('./routes/auth')); // Disabled for now
+  console.log('✅ Database available but using simple auth for demo');
 } catch (error) {
-  console.warn('⚠️ Database not available, skipping database routes:', error.message);
+  console.warn('⚠️ Database not available, using simple auth routes:', error.message);
 }
 // app.use('/api/users', require('./routes/users'));
 // app.use('/api/accounts', require('./routes/accounts'));
