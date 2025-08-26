@@ -57,48 +57,96 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Simple auth routes (without database for now)
+// Authentication endpoints
 app.post('/api/auth/login', async (req, res) => {
   const { email, password } = req.body;
   
-  // Demo user credentials
-  if (email === 'demo@finance-app.com' && password === 'password123') {
-    res.json({
-      message: 'Login successful',
-      user: {
-        id: 1,
-        email: 'demo@finance-app.com',
-        firstName: 'Demo',
-        lastName: 'User'
-      },
-      tokens: {
-        accessToken: 'demo-access-token-' + Date.now(),
-        refreshToken: 'demo-refresh-token-' + Date.now()
-      }
-    });
-  } else {
-    res.status(401).json({
-      error: 'Invalid credentials',
-      code: 'INVALID_CREDENTIALS'
-    });
+  const users = [
+    { id: 1, email: 'demo@finance-app.com', password: 'password123', firstName: 'Demo', lastName: 'User' },
+    { id: 2, email: 'john@example.com', password: 'password123', firstName: 'John', lastName: 'Doe' }
+  ];
+  
+  const user = users.find(u => u.email.toLowerCase() === email?.toLowerCase());
+  
+  if (!user || user.password !== password) {
+    return res.status(401).json({ error: 'Invalid credentials', code: 'INVALID_CREDENTIALS' });
   }
+  
+  res.json({
+    message: 'Login successful',
+    user: { id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName },
+    tokens: { accessToken: 'demo-access-token-' + Date.now() + '-' + user.id, refreshToken: 'demo-refresh-token-' + Date.now() + '-' + user.id }
+  });
 });
 
 app.post('/api/auth/register', async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
   
-  res.status(201).json({
-    message: 'User registered successfully',
-    user: {
-      id: Date.now(),
-      email: email,
-      firstName: firstName || 'New',
-      lastName: lastName || 'User'
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password are required' });
+  }
+  
+  const newUser = { id: Date.now(), email: email.toLowerCase(), firstName: firstName || 'New', lastName: lastName || 'User' };
+  const tokens = { accessToken: 'demo-access-token-' + Date.now() + '-' + newUser.id, refreshToken: 'demo-refresh-token-' + Date.now() + '-' + newUser.id };
+  
+  res.status(201).json({ message: 'User registered successfully', user: newUser, tokens });
+});
+
+// Financial endpoints
+app.get('/api/accounts', (req, res) => {
+  const accounts = [
+    { id: 1, name: 'Main Checking', type: 'checking', balance: 5420.50, institution: 'Chase Bank' },
+    { id: 2, name: 'Savings Account', type: 'savings', balance: 12750.25, institution: 'Wells Fargo' },
+    { id: 3, name: 'Investment Portfolio', type: 'investment', balance: 28940.80, institution: 'Fidelity' },
+    { id: 4, name: 'Credit Card', type: 'credit', balance: -1250.00, institution: 'American Express' }
+  ];
+  const totalBalance = accounts.filter(a => a.type !== 'credit').reduce((s, a) => s + a.balance, 0);
+  res.json({ accounts, summary: { totalBalance, netWorth: totalBalance - 1250 } });
+});
+
+app.get('/api/transactions', (req, res) => {
+  const transactions = [
+    { id: 1, description: 'Salary Deposit', amount: 3250.00, category: 'Income', type: 'income', date: new Date(Date.now() - 24*60*60*1000).toISOString() },
+    { id: 2, description: 'Grocery Store', amount: -45.50, category: 'Food & Dining', type: 'expense', date: new Date(Date.now() - 2*24*60*60*1000).toISOString() },
+    { id: 3, description: 'Gas Station', amount: -85.20, category: 'Transportation', type: 'expense', date: new Date(Date.now() - 3*24*60*60*1000).toISOString() }
+  ];
+  res.json({ transactions, summary: { totalIncome: 3250, totalExpenses: 130.70 } });
+});
+
+app.get('/api/crypto', (req, res) => {
+  const cryptos = [
+    { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin', price: 43250 + (Math.random() - 0.5) * 2000, change24h: (Math.random() - 0.5) * 10, rank: 1 },
+    { id: 'ethereum', symbol: 'ETH', name: 'Ethereum', price: 2580 + (Math.random() - 0.5) * 200, change24h: (Math.random() - 0.5) * 8, rank: 2 }
+  ];
+  res.json({ cryptos, lastUpdated: new Date().toISOString() });
+});
+
+app.get('/api/stocks', (req, res) => {
+  const stocks = [
+    { symbol: 'AAPL', name: 'Apple Inc.', price: 185 + (Math.random() - 0.5) * 10, change: (Math.random() - 0.5) * 5, sector: 'Technology' },
+    { symbol: 'GOOGL', name: 'Alphabet Inc.', price: 143 + (Math.random() - 0.5) * 8, change: (Math.random() - 0.5) * 4, sector: 'Technology' },
+    { symbol: 'MSFT', name: 'Microsoft Corporation', price: 420 + (Math.random() - 0.5) * 15, change: (Math.random() - 0.5) * 6, sector: 'Technology' }
+  ];
+  const indices = [
+    { name: 'S&P 500', symbol: 'SPX', value: 4850 + (Math.random() - 0.5) * 50, change: (Math.random() - 0.5) * 30 },
+    { name: 'NASDAQ', symbol: 'IXIC', value: 15420 + (Math.random() - 0.5) * 100, change: (Math.random() - 0.5) * 80 }
+  ];
+  res.json({ stocks, indices, lastUpdated: new Date().toISOString() });
+});
+
+app.get('/api/dashboard', (req, res) => {
+  res.json({
+    user: { firstName: 'Demo', lastName: 'User', email: 'demo@finance-app.com' },
+    financialSummary: { totalNetWorth: 45861.55, totalAssets: 47111.55, totalDebts: 1250.00, monthlyIncome: 3250.00, savingsRate: 12.4 },
+    recentTransactions: [
+      { id: 1, description: 'Salary Deposit', amount: 3250.00, category: 'Income', type: 'income', date: new Date(Date.now() - 24*60*60*1000).toISOString() },
+      { id: 2, description: 'Grocery Store', amount: -45.50, category: 'Food & Dining', type: 'expense', date: new Date(Date.now() - 2*24*60*60*1000).toISOString() }
+    ],
+    portfolio: {
+      stocks: { totalValue: 18750.40, dayChange: 245.80, dayChangePercent: 1.33 },
+      crypto: { totalValue: 8420.15, dayChange: -125.40, dayChangePercent: -1.47 }
     },
-    tokens: {
-      accessToken: 'demo-access-token-' + Date.now(),
-      refreshToken: 'demo-refresh-token-' + Date.now()
-    }
+    lastUpdated: new Date().toISOString()
   });
 });
 
