@@ -11,8 +11,7 @@
   "env": {
     "NODE_ENV": {
       "description": "Node.js environment",
-      "value": "production",
-      "required": true
+      "value": "production"
     },
     "JWT_SECRET": {
       "description": "JWT secret key for token signing",
