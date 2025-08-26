@@ -1,0 +1,22 @@
+{
+  "name": "finance-app-db",
+  "version": "1.0.0",
+  "description": "Database migrations and seeds for finance app",
+  "scripts": {
+    "migrate:latest": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback",
+    "migrate:make": "knex migrate:make",
+    "seed:run": "knex seed:run",
+    "seed:make": "knex seed:make",
+    "setup": "npm run migrate:latest && npm run seed:run",
+    "reset": "npm run migrate:rollback --all && npm run migrate:latest && npm run seed:run"
+  },
+  "dependencies": {
+    "knex": "^2.5.1",
+    "pg": "^8.11.3",
+    "dotenv": "^16.3.1"
+  },
+  "keywords": ["database", "migrations", "postgresql"],
+  "author": "",
+  "license": "ISC"
+}

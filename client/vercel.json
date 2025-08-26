@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "name": "finance-app-frontend",
+  "buildCommand": "npm run build",
+  "outputDirectory": "build",
+  "installCommand": "npm install",
+  "framework": "create-react-app",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "REACT_APP_API_URL": "@react_app_api_url",
+    "REACT_APP_COINGECKO_API": "@react_app_coingecko_api"
+  },
+  "build": {
+    "env": {
+      "REACT_APP_API_URL": "@react_app_api_url",
+      "REACT_APP_COINGECKO_API": "@react_app_coingecko_api"
+    }
+  }
+}

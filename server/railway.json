@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "build": {
+    "commands": [
+      "npm install",
+      "cd ../db && npm install && npm run migrate:latest && npm run seed:run"
+    ]
+  },
+  "deploy": {
+    "startCommand": "npm start",
+    "healthcheckPath": "/health"
+  }
+}
