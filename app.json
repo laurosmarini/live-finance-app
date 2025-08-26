@@ -1,0 +1,69 @@
+{
+  "name": "Finance App Backend",
+  "description": "Live Finance Application API with crypto and stock tracking, budgeting, and transaction management",
+  "repository": "https://github.com/laurosmarini/live-finance-app",
+  "logo": "https://raw.githubusercontent.com/laurosmarini/live-finance-app/main/client/public/logo192.png",
+  "keywords": ["node", "express", "finance", "crypto", "stocks", "api", "jwt", "postgresql"],
+  "success_url": "/api/health",
+  "scripts": {
+    "postdeploy": "cd db && npm install && npm run migrate:latest && npm run seed:run || true"
+  },
+  "env": {
+    "NODE_ENV": {
+      "description": "Node.js environment",
+      "value": "production",
+      "required": true
+    },
+    "JWT_SECRET": {
+      "description": "JWT secret key for token signing",
+      "generator": "secret",
+      "required": true
+    },
+    "JWT_REFRESH_SECRET": {
+      "description": "JWT refresh secret key",
+      "generator": "secret", 
+      "required": true
+    },
+    "JWT_EXPIRES_IN": {
+      "description": "JWT token expiration time",
+      "value": "15m",
+      "required": false
+    },
+    "JWT_REFRESH_EXPIRES_IN": {
+      "description": "JWT refresh token expiration time",
+      "value": "7d",
+      "required": false
+    },
+    "COINGECKO_API_URL": {
+      "description": "CoinGecko API base URL",
+      "value": "https://api.coingecko.com/api/v3",
+      "required": false
+    },
+    "CORS_ORIGIN": {
+      "description": "Frontend URL for CORS configuration",
+      "value": "https://finance-app-frontend-9pbbsgbjy-laurosmarinis-projects.vercel.app",
+      "required": false
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql:essential-0",
+      "as": "DATABASE"
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "stack": "heroku-24",
+  "websites": [
+    "https://finance-app-frontend-9pbbsgbjy-laurosmarinis-projects.vercel.app"
+  ]
+}

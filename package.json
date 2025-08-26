@@ -8,7 +8,9 @@
     "server": "cd server && npm run dev",
     "build": "cd client && npm run build",
     "test": "cd client && npm test && cd ../server && npm test",
-    "install-deps": "cd client && npm install && cd ../server && npm install"
+    "install-deps": "cd client && npm install && cd ../server && npm install",
+    "start": "cd server && npm start",
+    "heroku-postbuild": "cd server && npm install"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

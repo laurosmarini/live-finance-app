@@ -1,5 +1,11 @@
 # Finance App
 
+[![Deploy to Railway](https://railway.app/button.svg)](https://railway.app/template/live-finance-app)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/laurosmarini/live-finance-app)
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/laurosmarini/live-finance-app)
+
+**🚀 Frontend**: [Live on Vercel](https://finance-app-frontend-9pbbsgbjy-laurosmarinis-projects.vercel.app) | **⚙️ Backend**: Choose deployment option above
+
 A full-stack personal finance management application built with React and Express.js.
 
 ## 🌟 Features
