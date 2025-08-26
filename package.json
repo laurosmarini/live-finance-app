@@ -31,9 +31,17 @@
       "last 1 safari version"
     ]
   },
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "description": "A comprehensive live finance application with real-time crypto and stock tracking, budgeting, and transaction management.",
   "main": "index.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "keywords": ["finance", "crypto", "stocks", "budgeting", "transactions", "react", "node"],
+  "author": "laurosmarini",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laurosmarini/live-finance-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/laurosmarini/live-finance-app/issues"
+  },
+  "homepage": "https://github.com/laurosmarini/live-finance-app#readme"
 }
