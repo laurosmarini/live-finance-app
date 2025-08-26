@@ -12,13 +12,13 @@
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "@react_app_api_url",
-    "REACT_APP_COINGECKO_API": "@react_app_coingecko_api"
+    "REACT_APP_API_URL": "https://live-finance-app-backend.railway.app",
+    "REACT_APP_COINGECKO_API": "https://api.coingecko.com/api/v3"
   },
   "build": {
     "env": {
-      "REACT_APP_API_URL": "@react_app_api_url",
-      "REACT_APP_COINGECKO_API": "@react_app_coingecko_api"
+      "REACT_APP_API_URL": "https://live-finance-app-backend.railway.app",
+      "REACT_APP_COINGECKO_API": "https://api.coingecko.com/api/v3"
     }
   }
 }
