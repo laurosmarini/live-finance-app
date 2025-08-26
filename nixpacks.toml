@@ -1,0 +1,10 @@
+[phases.install]
+cmds = [
+    "cd server && npm install --production"
+]
+
+[phases.start]
+cmd = "bash start.sh"
+
+[variables]
+NODE_ENV = "production"
